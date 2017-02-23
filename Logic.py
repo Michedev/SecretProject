@@ -12,7 +12,8 @@ class Brain:
 
     def run(self):
         CacheServer.capacity = self.parser.cacheServerCapacity
-        sortedRequests = self.parser.requests[:].sort(key=lambda req: -req.numRequests)
+        sortedRequests = self.parser.requests[:]
+        sortedRequests.sort(key=lambda req: -req.numRequests)
         self.output.write(str(self.parser.numberOfCacheServer))
         for i in range(self.parser.numberOfCacheServer):
             idVideo = sortedRequests[i].videoID
