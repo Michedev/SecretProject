@@ -39,7 +39,7 @@ class Brain:
         availableCacheServer = list(filter(lambda cacheServer : self.cacheServerActualCapacity[cacheServer.id] + video.size < CacheServer.capacity, endpoint.cacheServerList))
         if len(availableCacheServer) == 0:
             return None
-        bestCacheServer = min(availableCacheServer, key=lambda cacheServer: cacheServer.latency)
+        bestCacheServer = min(availableCacheServer, key=lambda cacheServer: cacheServer.latency * 0.8 + (video.size) * 0.2)
 
         self.printer.put(bestCacheServer.id, request.videoID)
         self.cacheServerActualCapacity[bestCacheServer.id] += video.size
