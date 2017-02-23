@@ -42,3 +42,4 @@ class TheConfigParser:
         for i in range(0, self.numberOfRequestDescription):
             values = theFile.readline().split(' ')
             self.requests.append(EndpointRequests(int(values[2]), int(values[0]), int(values[1])))
+        theFile.close()
