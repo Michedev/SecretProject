@@ -23,6 +23,7 @@ class Brain:
 
     def findBestLatencyInCacheServers(self, request):
         endpoint = self.parser.endpoints[request.endpointID]
+        video = self.parser.videos[request.videoID]
         if len(endpoint.cacheServerList) == 0:
             return endpoint.latencyToDatacenter - 1
         bestCacheServer = min(endpoint.cacheServerList, key=lambda cacheServer: cacheServer.latency)
@@ -39,7 +40,7 @@ class Brain:
         availableCacheServer = list(filter(lambda cacheServer : self.cacheServerActualCapacity[cacheServer.id] + video.size < CacheServer.capacity, endpoint.cacheServerList))
         if len(availableCacheServer) == 0:
             return None
-        bestCacheServer = min(availableCacheServer, key=lambda cacheServer: cacheServer.latency * 0.8 + (video.size) * 0.2)
+        bestCacheServer = min(availableCacheServer, key=lambda cacheServer: cacheServer.latency * 0.6 + (video.size) * 0.1 + (self.cacheServerActualCapacity[cacheServer.id] - video.size) * 0.3)
 
         self.printer.put(bestCacheServer.id, request.videoID)
         self.cacheServerActualCapacity[bestCacheServer.id] += video.size
