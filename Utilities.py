@@ -7,6 +7,11 @@ class ThePrinter:
     def put(self, i, idVideo):
         self.outputs[i] += ' ' + str(idVideo)
 
+    def remove(self, i, idVideo):
+        modifiedLine = self.outputs[i].split(' ')
+        modifiedLine[1:].remove(str(idVideo))
+        self.outputs[i] = str(i) + ' ' + ' '.join(modifiedLine)
+
     def print(self):
         theOutputFile = open(self.outputFile, mode='w')
         theOutputFile.write(str(self.numCacheServer) + '\n')
