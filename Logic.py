@@ -30,10 +30,10 @@ class Brain:
         if len(availableCacheServer) == 0:
             return None
         bestCacheServer = min(availableCacheServer, key=lambda cacheServer: cacheServer.latency)
-        if video.id in self.videosInCacheServer[bestCacheServer.id] :
+        if request.videoID in self.videosInCacheServer[bestCacheServer.id] :
             return None
         self.printer.put(bestCacheServer.id, request.videoID)
         self.cacheServerActualCapacity[bestCacheServer.id] += video.size
-        self.videosInCacheServer[bestCacheServer.id].append(video.id)
+        self.videosInCacheServer[bestCacheServer.id].append(request.videoID)
 
 
