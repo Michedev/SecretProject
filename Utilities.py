@@ -9,6 +9,7 @@ class ThePrinter:
 
     def print(self):
         theOutputFile = open(self.outputFile, mode='w')
+        theOutputFile.write(str(self.numCacheServer) + '\n')
         for line in self.outputs:
             theOutputFile.write(line + '\n')
         theOutputFile.close()
