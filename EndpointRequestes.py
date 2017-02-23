@@ -1,6 +1,6 @@
 class EndpointRequestes:
 
-    def __init__(self, numRequestes, videoID, endpointID):
-        self.num = numRequestes
+    def __init__(self, numRequests, videoID, endpointID):
+        self.numRequests = numRequests
         self.videoID = videoID
         self.endpointID = endpointID
