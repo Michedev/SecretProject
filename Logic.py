@@ -18,9 +18,6 @@ class Brain:
         sortedRequests.sort(key=lambda req: -req.numRequests)
         for i in range(len(sortedRequests)):
             self.putInCacheServer(sortedRequests[i])
-            idVideo = sortedRequests[i].videoID
-            video = self.parser.videos[i]
-            self.printer.put(i, idVideo)
         self.printer.print()
 
 
