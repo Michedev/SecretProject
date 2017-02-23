@@ -7,7 +7,8 @@ class Brain:
     def __init__(self, filename):
         self.parser = TheConfigParser(filename)
         self.parser.readConfiguration()
-        self.output = open("output.out")
+        self.output = open("output.out", mode='w')
+
 
     def run(self):
         CacheServer.capacity = self.parser.cacheServerCapacity
