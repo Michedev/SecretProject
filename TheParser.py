@@ -8,7 +8,7 @@ class TheConfigParser:
         self.theFile = 'Config/' + nameOfConfigFile
         self.numberOfVideos = 0
         self.numberOfEndpoints = 0
-        self.numberOfRequestDecription = 0
+        self.numberOfRequestDescription = 0
         self.numberOfCacheServer = 0
         self.cacheServerCapacity = 0
         self.videos = []
@@ -21,7 +21,7 @@ class TheConfigParser:
         values = theFile.readline().split(' ')
         self.numberOfVideos = int(values[0])
         self.numberOfEndpoints = int(values[1])
-        self.numberOfRequestDecription = int(values[2])
+        self.numberOfRequestDescription = int(values[2])
         self.numberOfCacheServer = int(values[3])
         self.cacheServerCapacity = int(values[4])
 
@@ -39,6 +39,6 @@ class TheConfigParser:
                 theList.append([int(values[0]), int(values[1])])
             self.endpoints.append(Endpoint(latency, theList))
 
-        for i in range(0, self.numberOfRequestDecription):
+        for i in range(0, self.numberOfRequestDescription):
             values = theFile.readline().split(' ')
             self.requests.append(EndpointRequests(int(values[2]), int(values[0]), int(values[1])))
