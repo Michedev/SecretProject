@@ -14,8 +14,8 @@ class Brain:
         CacheServer.capacity = self.parser.cacheServerCapacity
         sortedRequests = self.parser.requests[:]
         sortedRequests.sort(key=lambda req: -req.numRequests)
-        self.output.write(str(self.parser.numberOfCacheServer))
+        self.output.write(str(self.parser.numberOfCacheServer) + "\n")
         for i in range(self.parser.numberOfCacheServer):
             idVideo = sortedRequests[i].videoID
             video = self.parser.videos[i]
-            self.output.write(f"{i} {idVideo}")
+            self.output.write(f"{i} {idVideo}\n")
