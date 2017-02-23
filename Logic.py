@@ -25,12 +25,16 @@ class Brain:
     def putInCacheServer(self, request):
         endpoint = self.parser.endpoints[request.endpointID]
         video = self.parser.videos[request.videoID]
-        if self.checkIfVideoAlreadyCached(endpoint, request.videoID):
-            return None
+        isPresent, cacheIDPresent =  self.checkIfVideoAlreadyCached(endpoint, request.videoID)
         availableCacheServer = list(filter(lambda cacheServer : self.cacheServerActualCapacity[cacheServer.id] + video.size < CacheServer.capacity, endpoint.cacheServerList))
         if len(availableCacheServer) == 0:
             return None
         bestCacheServer = min(availableCacheServer, key=lambda cacheServer: cacheServer.latency)
+        if isPresent:
+            cacheServer = endpoint[cacheIDPresent]
+            if bestCacheServer.latency - cacheServer.latency < -300:
+                self.printer.put(bestCacheServer.id, request.videoID)
+            return None
         self.printer.put(bestCacheServer.id, request.videoID)
         self.cacheServerActualCapacity[bestCacheServer.id] += video.size
         self.videosInCacheServer[bestCacheServer.id].append(request.videoID)
@@ -39,7 +43,7 @@ class Brain:
         cacheServersIds = [cacheServer.id for cacheServer in endpoint.cacheServerList]
         for cacheServerID in cacheServersIds:
             if videoID in self.videosInCacheServer[cacheServerID]:
-                return True
-        return False
+                return True, cacheServerID
+        return False, None
 
 
