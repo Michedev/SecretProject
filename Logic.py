@@ -9,7 +9,7 @@ class Brain:
         self.parser = TheConfigParser(filename)
         self.parser.readConfiguration()
         self.printer = ThePrinter(self.parser.numberOfCacheServer, outputFilename)
-        self.cacheServerRemainCapacity = [0] * self.parser.numberOfCacheServer
+        self.cacheServerActualCapacity = [0] * self.parser.numberOfCacheServer
 
 
     def run(self):
@@ -24,10 +24,11 @@ class Brain:
     def putInCacheServer(self, request):
         endpoint = self.parser.endpoints[request.endpointID]
         video = self.parser.videos[request.videoID]
-        availableCacheServer = list(filter(lambda cacheServer : self.cacheServerRemainCapacity[cacheServer.id] + video.size < CacheServer.capacity, endpoint.cacheServerList))
+        availableCacheServer = list(filter(lambda cacheServer : self.cacheServerActualCapacity[cacheServer.id] + video.size < CacheServer.capacity, endpoint.cacheServerList))
         if len(availableCacheServer) == 0:
             return None
         bestCacheServer = min(availableCacheServer, key=lambda cacheServer: cacheServer.latency)
         self.printer.put(bestCacheServer.id, request.videoID)
+        self.cacheServerActualCapacity[bestCacheServer.id] += video.size
 
 
