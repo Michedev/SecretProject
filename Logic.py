@@ -4,10 +4,10 @@ from TheParser import TheConfigParser
 
 class Brain:
 
-    def __init__(self, filename):
+    def __init__(self, filename, outputFilename):
         self.parser = TheConfigParser(filename)
         self.parser.readConfiguration()
-        self.output = open("output.out", mode='w')
+        self.output = open(outputFilename, mode='w')
 
 
     def run(self):
